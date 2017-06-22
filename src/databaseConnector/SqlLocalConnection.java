@@ -36,12 +36,11 @@ public class SqlLocalConnection extends DbConnection{
     }
     //insert row to table 
     @Override
-    public void doInsert(String tableName,String name) {
+    public void doInsert(String tableName,String values) {
         try {            
             Date date = new Date();
             SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-            System.out.println("INSERT INTO "+tableName+" VALUES ('" + name + "',"+enuRecordState.INSERTED.ordinal()+",convert(datetime,'"+ft.format(date)+"'),NULL)");
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO "+tableName+" VALUES ('" + name + "',"+enuRecordState.INSERTED.ordinal()+",convert(datetime,'"+ft.format(date)+"'),NULL)" );
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO "+tableName+" VALUES ('" + values + "',"+enuRecordState.INSERTED.ordinal()+",convert(datetime,'"+ft.format(date)+"'),NULL)" );
             stmt.executeUpdate();
             System.out.println("inserted");
         } catch (SQLException e) {

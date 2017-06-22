@@ -77,24 +77,22 @@ public class Synchronizer {
                 tableData.put("deletedRecords", deletedElementsIds.toString());
                 System.out.println(tableData);
                 allData.put(tableData);
+                String tablesString= sender.parseInsertedElementsJSON(tableData.toString());
                 //****************************************************************
-            } 
-            String tablesString= sender.parseInsertedElementsJSON(allData.toString());
-            JSONArray tablesJSON=new JSONArray(tablesString);
-            for (int i = 0; i < tablesJSON.length(); i++) {
+                JSONArray tablesJSON=new JSONArray(tablesString);
+                for (int i = 0; i < tablesJSON.length(); i++) {
                 JSONObject tableJSON=new JSONObject(tablesJSON.get(i).toString());
                 JSONArray array=new JSONArray();
                 tableJSON.toJSONArray(array);
                 System.out.println("array"+array);
                 System.out.println("names"+tableJSON.names());
-                String tableName = tableJSON.getString("tableName");
                 
                 JSONArray oldIdsArray=new JSONArray(tableJSON.getString("oldIds"));
                 JSONArray newIdsArray=new JSONArray(tableJSON.getString("newIds"));
                 System.out.println("old ids" +oldIdsArray);
                 System.out.println("new ids" +newIdsArray);
                 for (int j = 0; j < oldIdsArray.length(); j++) {
-                    localConnection.updateServerId(tableName,oldIdsArray.getInt(i) , newIdsArray.getInt(i));  
+                    localConnection.updateServerId(tableName,oldIdsArray.getInt(j) , newIdsArray.getInt(j));  
                 }
                 JSONArray tableCoulmnsNamesJSON=new JSONArray(tableJSON.getString("metaData"));
                 JSONArray insertedJSON=new JSONArray(tableJSON.getString("inserted"));
@@ -105,15 +103,17 @@ public class Synchronizer {
                 System.out.println("updated "+updatedJSON);
                 System.out.println("deleted "+deletedJSON);
                 if (insertedJSON.length()>0) {
-                    Table table=findTableByName(tableName, tables);
+                    
                     String insertedRecordFromServer= insertedRecordsJSONParser(insertedJSON.toString(),table,localConnection);
                     System.out.println(insertedRecordFromServer);
-                    //localConnection.insertRecordValues(tableName, insertedRecordFromServer);
+                    localConnection.insertRecordValues(tableName, insertedRecordFromServer);
                 }
                 if (deletedJSON.length()>0) {
                     // [2,5] =>(2,5)
-                    //localConnection.deleteRecordsFromValues(tableName, deletedRecordsIdsJSONParser(deletedJSON.toString()));
+                    localConnection.deleteRecordsFromValues(tableName, deletedRecordsIdsJSONParser(deletedJSON.toString()));
                 }
+            } 
+            
             }
             /*
             //get non synchronized element
@@ -325,7 +325,7 @@ public class Synchronizer {
                 result+=","+recordJSON.get(field.getFieldName());
             }
         }
-        ArrayList<ForgeinKeyInformation> forgeinKeyInformations=new ArrayList<>();
+        ArrayList<ForgeinKeyInformation> forgeinKeyInformations=table.getForgeinKeys();
         for (ForgeinKeyInformation forgeinKeyInformation : forgeinKeyInformations) {
             String tableName=forgeinKeyInformation.getForgeinKeyTableName();
             String columnName = forgeinKeyInformation.getForgeinKeyColumnName();
@@ -336,7 +336,12 @@ public class Synchronizer {
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         String currentTime = ft.format(date);
-        result="("+result.substring(result.indexOf(',')+1)+ ","+enuRecordState.SYNCHRONIZED.ordinal()+ ",CAST('"+currentTime+"' AS DATETIME),"+serverId+")";
+        System.out.println("resutlt" + result);
+        if (result.isEmpty()) {
+            result="("+enuRecordState.SYNCHRONIZED.ordinal()+ ",CAST('"+currentTime+"' AS DATETIME),"+serverId+")";
+        }else{
+            result="("+result.substring(result.indexOf(',')+1)+ ","+enuRecordState.SYNCHRONIZED.ordinal()+ ",CAST('"+currentTime+"' AS DATETIME),"+serverId+")";
+        }
         return result;
     }
     //this will parse record value from json to  record value
