@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/util/Config.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/databaseConnector/DbConnection.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/databaseConnector/SqlLocalConnection.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/configrationfileitems/ForgeinKeyInformation.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/configrationfileitems/Table.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/databaseConnector/enuRecordState.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/configrationfileitems/Field.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/synchronizer/Synchronizer.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/sender/InsertedElementsJSONSender.java</file>
+            <file>file:/C:/Users/Bcc/Documents/NetBeansProjects/databaseSyncProject2/src/databasesyncproject2/DatabaseSyncProject2.java</file>
+        </group>
+    </open-files>
+</project-private>
